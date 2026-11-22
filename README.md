@@ -2,41 +2,102 @@
 
 ## Overview
 
-**SalesReinforcer** is a data-driven project designed to support sales performance analysis and reinforcement through structured data processing, analytical insights, and predictive modeling.
+**SalesReinforcer** is a Python-based reinforcement learning project that explores how an intelligent agent can learn decision-making strategies through interaction with an environment.
 
-The project provides a foundation for exploring sales-related data, identifying meaningful patterns, and developing data-driven approaches to improve sales performance and decision-making.
+The project implements a **Q-learning agent** that learns from rewards and adjusts its action-selection strategy over multiple training episodes. It uses an epsilon-greedy policy to balance exploration and exploitation, while updating a Q-table to improve its decisions over time.
 
-## Objectives
+The goal is to develop a reinforcement learning framework that can learn effective strategies in a sales-related decision environment.
 
-- Analyze sales data to identify trends and performance patterns.
-- Explore factors that influence sales outcomes.
-- Apply data analytics and machine learning techniques where appropriate.
-- Generate actionable insights to support business decisions.
-- Build a maintainable and extensible analytical solution.
+## Key Features
+
+- **Q-Learning:** Implements the temporal-difference Q-learning algorithm to learn state-action values.
+- **Epsilon-Greedy Policy:** Balances exploration of new actions with exploitation of previously learned strategies.
+- **Adaptive Exploration:** Gradually reduces epsilon during training using an epsilon decay schedule.
+- **Q-Table Management:** Stores learned action values for individual environment states.
+- **Reward Tracking:** Records cumulative rewards across training episodes.
+- **Best-State Tracking:** Identifies and retains the state associated with the highest observed environment reward.
+- **Training Monitoring:** Logs episode progress, rewards, and exploration rates.
+
+## Reinforcement Learning Approach
+
+The agent follows the Q-learning update equation:
+
+\[
+Q(s,a) \leftarrow Q(s,a) + \alpha
+[r + \gamma \max_{a'} Q(s',a') - Q(s,a)]
+\]
+
+Where:
+
+- \(s\): Current state
+- \(a\): Selected action
+- \(r\): Reward received
+- \(s'\): Next state
+- \(\alpha\): Learning rate
+- \(\gamma\): Discount factor
+
+### Exploration vs. Exploitation
+
+The agent uses an epsilon-greedy strategy:
+
+- With probability epsilon, it selects a random action.
+- Otherwise, it selects an action with the highest estimated Q-value.
+
+Epsilon decreases after each completed episode, gradually shifting the agent from exploration toward exploitation.
+
+## Model Configuration
+
+The Q-learning agent supports configurable hyperparameters:
+
+| Parameter | Default | Description |
+|---|---:|---|
+| Learning rate | 0.1 | Controls the magnitude of Q-value updates |
+| Discount factor | 0.95 | Determines the importance of future rewards |
+| Initial epsilon | 1.0 | Initial exploration probability |
+| Epsilon decay | 0.995 | Exploration reduction rate |
+| Minimum epsilon | 0.01 | Minimum exploration probability |
+| Random state | 42 | Supports reproducible random behavior |
+
+## Training and Evaluation
+
+The training process consists of the following steps:
+
+1. Initialize the environment and reset the starting state.
+2. Select an action using the epsilon-greedy policy.
+3. Execute the action and observe the next state and reward.
+4. Update the Q-table using the Q-learning update equation.
+5. Repeat until the episode terminates.
+6. Record the episode reward and evaluate the final environment state.
+7. Decay epsilon and continue with the next episode.
+
+The training routine returns:
+
+- `best_state`: Best-performing state identified during training.
+- `best_reward`: Highest observed environment reward.
+- `episode_rewards`: Reward history across training episodes.
+- `epsilon_history`: Epsilon values recorded throughout training.
+
+## Technologies
+
+- **Python** – Core implementation
+- **NumPy** – Numerical computation and Q-table operations
+- **Reinforcement Learning** – Sequential decision-making and reward-based learning
+- **Q-Learning** – Model-free reinforcement learning algorithm
+- **Git / GitHub** – Version control
 
 ## Project Structure
 
 ```text
 SalesReinforcer/
 │
-├── data/                 # Input and processed datasets
-├── notebooks/            # Exploratory data analysis and experimentation
-├── src/                  # Source code and reusable modules
-├── requirements.txt      # Python dependencies
-└── README.md             # Project documentation
+├── src/
+│   └── qlearningagent.py
+│
+├── README.md
+└── ...
 ```
 
-*Note: Update this structure to reflect the actual repository contents.*
-
-## Technologies
-
-Potential technologies used in this project include:
-
-- **Python** – Data processing and analytical development
-- **Pandas / NumPy** – Data manipulation and numerical computation
-- **Scikit-learn** – Machine learning and predictive modeling
-- **Matplotlib / Seaborn** – Data visualization
-- **Git / GitHub** – Version control and project collaboration
+*The structure above highlights the source file inspected; additional repository components can be documented as they are verified.*
 
 ## Getting Started
 
@@ -57,28 +118,35 @@ source venv/bin/activate
 ### 3. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install numpy
 ```
 
-### 4. Run the project
+### 4. Integrate the Q-learning agent
 
-Follow the instructions in the relevant source files or notebooks to execute the analysis and application components.
+The `QLearningAgent` class accepts an environment implementing the following interface:
 
-## Development Workflow
+- `reset()` – Initializes an episode and returns the starting state.
+- `step(action)` – Executes an action and returns the next state, reward, termination flag, and additional information.
+- `get_reward()` – Returns the environment's evaluation reward.
+- `get_state()` – Returns the current environment state.
 
-1. Prepare and validate the input data.
-2. Perform exploratory data analysis.
-3. Develop analytical or machine learning components.
-4. Evaluate results using appropriate performance metrics.
-5. Refine the solution based on findings.
+The agent can then be trained using:
 
-## Future Enhancements
+```python
+results = agent.train(
+    environment,
+    episodes=100
+)
+```
 
-- Expand sales performance metrics and reporting.
-- Introduce additional predictive analytics capabilities.
-- Improve model evaluation and monitoring.
-- Develop interactive dashboards for business users.
-- Automate data processing and reporting workflows.
+## Future Improvements
+
+- Visualize cumulative rewards across training episodes.
+- Plot epsilon decay to monitor exploration behavior.
+- Compare different learning rates and discount factors.
+- Evaluate performance across multiple training runs.
+- Introduce additional reinforcement learning algorithms for comparison.
+- Improve model persistence and evaluation.
 
 ## Author
 
@@ -86,6 +154,3 @@ Follow the instructions in the relevant source files or notebooks to execute the
 
 GitHub: https://github.com/bqsauce-ux
 
-## License
-
-A license has not yet been specified for this repository.
