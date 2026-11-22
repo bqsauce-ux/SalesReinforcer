@@ -142,7 +142,9 @@ results = agent.train(
 ## Future Improvements
 
 - Visualize cumulative rewards across training episodes.
+  ![Training Rewards](episode_rewards_vs_training_episodes.png)
 - Plot epsilon decay to monitor exploration behavior.
+  ![Epsilon_Decay](epsilon_decay_vs_episode.png)
 - Compare different learning rates and discount factors.
 - Evaluate performance across multiple training runs.
 - Introduce additional reinforcement learning algorithms for comparison.
