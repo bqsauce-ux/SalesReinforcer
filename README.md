@@ -90,6 +90,14 @@ The training routine returns:
 ```text
 SalesReinforcer/
 │
+├── data/
+│   └── SalesCRM.excel
+├── eda/
+│   └── notebooks
+│       └── CRM Data Exploration.ipynb 
+│   └── results
+│       └── milestone_summary.csv
+│       └── missingness_summary.csv
 ├── src/
 │   └── qlearningagent.py
 │   └── data-processing.py
