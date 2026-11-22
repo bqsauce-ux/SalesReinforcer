@@ -92,9 +92,14 @@ SalesReinforcer/
 │
 ├── src/
 │   └── qlearningagent.py
-│
+│   └── data-processing.py
+│   └── evaluate.py
+│   └── rl_environment.py
+│   └── feature_selection.py
+│   └── reward_function.py
+│   └── main.ipynb
 ├── README.md
-└── ...
+└── requirements.txt
 ```
 
 *The structure above highlights the source file inspected; additional repository components can be documented as they are verified.*
