@@ -22,10 +22,10 @@ The goal is to develop a reinforcement learning framework that can learn effecti
 
 The agent follows the Q-learning update equation:
 $$
-\[
+
 Q(s,a) \leftarrow Q(s,a) + \alpha
 [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]
-\]
+
 $$
 Where:
 
